@@ -1,0 +1,29 @@
+<mat-card class="registerContainer">
+<div *ngIf="error">{{error}}</div>
+<h2>Register</h2>
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <div class="formElement">
+        <label for="user_name">Username</label>
+        <input type="text" formControlName="user_name" [ngClass]="{ 'is-invalid': submitted && f.user_name.errors }" />
+        <div *ngIf="submitted && f.user_name.errors">
+            <div *ngIf="f.user_name.errors.required">Username is required</div>
+        </div>
+    </div>
+    <div class="formElement">
+        <label for="password">Password</label>
+        <input type="password" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+        <div *ngIf="submitted && f.password.errors">
+            <div *ngIf="f.password.errors.required">Password is required</div>
+            <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+        </div>
+    </div>
+    <div class="formElement">
+        <button [disabled]="loading">
+            Register
+        </button>
+        <a routerLink="/login">Cancel</a>
+    </div>
+</form>
+</mat-card>
+
+

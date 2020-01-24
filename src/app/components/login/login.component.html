@@ -1,0 +1,27 @@
+<mat-card class="loginContainer">
+<div *ngIf="error">{{error}}</div>
+<div *ngIf="success">{{success}}</div>
+<h2>Login</h2>
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div class="formElement">
+        <label for="user_name">Username</label>
+        <input type="text" formControlName="user_name" [ngClass]="{ 'is-invalid': submitted && f.user_name.errors }" />
+        <div *ngIf="submitted && f.user_name.errors">
+            <div *ngIf="f.user_name.errors.required">Username is required</div>
+        </div>
+    </div>
+    <div class="formElement">
+        <label for="password">Password</label>
+        <input type="password" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+        <div *ngIf="submitted && f.password.errors">
+            <div *ngIf="f.password.errors.required">Password is required</div>
+        </div>
+    </div>
+    <div class="formElement">
+        <button [disabled]="loading">
+            Login
+        </button>
+        <button routerLink="/register"> Register</button>
+    </div>
+</form>
+</mat-card>

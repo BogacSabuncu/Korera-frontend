@@ -1,0 +1,71 @@
+.header{
+    border-bottom: 2px solid black ;
+    display: flexbox;
+    padding-left: 0;
+    height: 9vh;
+}
+
+h1{
+    display: inline;
+}
+h4{
+    display: inline;
+}
+
+#popOverInfo{
+    background-color: black;
+    color: floralwhite;
+    text-align: center;
+    height: 15vh;
+    width: 15vw;
+    padding: 10%;
+}
+
+#popOverButtons{
+    background-color: grey;
+    width: 15vw;
+    height: 8vh;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-bottom: 5% ;
+}
+
+.popOverBttn{
+    padding: 5%;
+    background-color: linen;
+    margin-bottom: 5%;
+}
+
+#signout{
+    float: right;
+}
+
+button{
+    border: none;
+    background-color: inherit;
+    margin: 1vw;
+}
+
+
+#title{
+    margin-left: 30%;
+    margin-right: 25%;
+}
+
+#logo{
+    color: whitesmoke;
+    background-color: orangered;
+    padding: 2vw;
+    margin:0;
+    border-bottom: 2px solid black;
+    font-weight: bolder;
+}
+
+mat-icon{
+    padding: 0%;
+    background-color: inherit;
+}
+
+.popover{
+    z-index: 20;
+}

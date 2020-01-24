@@ -1,0 +1,24 @@
+<div class="header">
+        <span id='logo'>Resource Managment</span>
+        <span id='title' *ngIf="currentUser"><h1>Project 1</h1> </span>
+        
+
+        <button *ngIf="currentUser" placement="bottom"
+        [ngbPopover]="popContent" >
+        <mat-icon> person</mat-icon></button>
+        <span id='user' *ngIf="currentUser"> <h4>Username</h4></span>
+        <button> <mat-icon> help_outline</mat-icon></button>
+        
+        <ng-template #popContent>  
+                <div id="popOverInfo">
+                        <h3>Username</h3>
+                        <p>Member since</p>
+                        <p>Date</p>
+                </div>
+                <div id="popOverButtons">
+                        <button class="popOverBttn">Profile</button>
+                        <button class="popOverBttn" id="signout" (click)="onSignOut()">Sign Out</button>
+                </div>
+        </ng-template>
+
+</div>

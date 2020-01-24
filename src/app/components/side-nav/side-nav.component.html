@@ -1,0 +1,23 @@
+<mat-sidenav-container>
+    <mat-sidenav #drawer mode="side">
+        <mat-nav-list>
+            <a mat-list-item href="#">Resource</a>
+            <a mat-list-item href="#">Project</a>
+            <a mat-list-item href="#">Formula</a>
+            <a mat-list-item href="#">Template</a>
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <mat-toolbar color="primary">
+            <button
+                type="button"
+                aria-label="Toggle sidenav"
+                mat-icon-button
+                (click)="drawer.toggle()"
+                *ngIf='currentUser'>
+                <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+            </button>
+        </mat-toolbar>
+        <ng-content></ng-content>
+    </mat-sidenav-content>
+</mat-sidenav-container>
