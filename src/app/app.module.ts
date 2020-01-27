@@ -87,6 +87,7 @@ const material =[
 
     //fakeBackendProvider
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [FeatureComponent]
 })
 export class AppModule { }

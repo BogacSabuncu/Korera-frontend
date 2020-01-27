@@ -37,7 +37,7 @@ export class ResourceComponent implements OnInit, AfterViewInit {
               private projectService: ProjectService,
               ) {
     this.getProject();
-    this.getResource();
+   // this.getResource();
 
   }
 
@@ -45,17 +45,23 @@ export class ResourceComponent implements OnInit, AfterViewInit {
     //this.sidebarService.status = true;
     // this.getResource();
     // console.log(this.resources);
-    this.dataSource = new MatTableDataSource(this.resources);
-
-    // this.dataSource.sort = this.sort;
-    // this.dataSource.paginator = this.paginator;
+    this.resourceService.getResources()
+    .subscribe(resources => {
+      this.resources = resources;
+      console.log('populate datasource');
+      this.dataSource.data = resources;
+      // this.dataSource = new MatTableDataSource(this.resources);
+    
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
   }
 
   ngAfterViewInit() {
     console.log('inside after view init');
     // this.projectService.setProjectName('this.project.name');
     console.log('set current project name');
-    this.dataSource.paginator = this.paginator;
+    // this.dataSource.paginator = this.paginator;
     console.log('before sort');
     this.dataSource.sort = this.sort;
     // console.log(this.sort);
@@ -79,6 +85,7 @@ export class ResourceComponent implements OnInit, AfterViewInit {
       this.resources = resources;
       console.log('populate datasource');
       this.dataSource.data = resources;
+      // this.dataSource.paginator = this.paginator;
       console.log(this.dataSource);
       console.log('get');
       // this.displayedColumns = Object.keys(this.resources[0]);
