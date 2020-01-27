@@ -5,7 +5,7 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { AuthGuard } from './helpers/auth.guard';
 import {ProjectComponent} from './components/project/project.component';
-import { ResourceComponent } from "./components/resource/resource.component";
+import { ResourceComponent } from './components/resource/resource.component';
 
 
 const routes: Routes = [

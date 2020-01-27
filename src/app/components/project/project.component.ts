@@ -24,7 +24,7 @@ export class ProjectComponent implements OnInit, AfterViewInit {
   displayedColumns = ["select", "name", "code"];
   public projectfilter: FormControl = new FormControl();
   // @ViewChild(ResourceComponent, {static: false}) rc: ResourceComponent;
-  constructor(    
+  constructor(
                   private projectService: ProjectService,
                   private resourceService: ResourceService) {
 
@@ -136,6 +136,6 @@ export class ProjectComponent implements OnInit, AfterViewInit {
   submitHandler() {
     const newProject = new Project('Project4');
     newProject.resouces = this.checkedData;
-    //this.projectService.addProject(newProject).subscribe(res => console.log(res));
+    this.projectService.addProject(newProject).subscribe(res => console.log(res));
   }
 }

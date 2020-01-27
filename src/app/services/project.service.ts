@@ -49,9 +49,9 @@ export class ProjectService {
     return this.http.get<Project>(this.url + '/findById/' + id);//, this.httpOptions);
   }
 
-  // addProject(project: Project): Observable<Project> {
-  //   return this.http.post<Project>(this.url + '/add', project, {responseType: 'text'as 'json', headers: this.header });
-  // }
+  addProject(project: Project): Observable<Project> {
+    return this.http.post<Project>(this.url + '/add', project);//, {responseType: 'text'as 'json', headers: this.header });
+  }
 
 
 }
