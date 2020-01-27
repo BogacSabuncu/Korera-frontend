@@ -1,0 +1,22 @@
+<h1 mat-dialog-title>Your New Feature</h1>
+<div mat-dialog-content>
+  <div [formGroup]="dialog">
+<!--  <p>Feature Name</p>-->
+  <mat-form-field floatLabel="auto" appearance="legacy">
+    <mat-label>Name</mat-label>
+    <input matInput [(ngModel)]="data.name" placeholder="Name" formControlName="name" required>
+  </mat-form-field>
+<!--  <mat-form-field floatLabel="auto">-->
+<!--    <mat-label>Type</mat-label>-->
+<!--    <input matInput [(ngModel)]="data.type"  formControlName="type">-->
+<!--  </mat-form-field>-->
+<!--  <mat-form-field floatLabel="auto">-->
+<!--    <mat-label>Content</mat-label>-->
+<!--    <input matInput [(ngModel)]="data.content" formControlName="content">-->
+<!--  </mat-form-field>-->
+</div>
+  </div>
+<div mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="dialog" cdkFocusInitial>Ok</button>
+</div>

@@ -1,0 +1,208 @@
+<!-- <mat-card style="height:auto;"> -->
+<div style="min-width: 1000px">
+  <div style="text-align: right" class="dropdown show mb-5">
+    <div class="select">
+      <mat-form-field>
+        <!---->
+        <mat-select [formControl]="projectfilter" placeholder="Project">
+          <mat-option>
+            <!-- <ngx-mat-select-search [formControl]="projectFilterCtrl"></ngx-mat-select-search> -->
+            <input
+              #searchTxt
+              type="text"
+              (input)="filterProjectName(searchTxt.value)"
+              class="dropdown-item"
+              placeholder="Search Here ..."
+            />
+          </mat-option>
+
+          <mat-option
+            *ngFor="let project of projectNames"
+            [value]="project.project_name"
+          >
+            {{ project.project_name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <br />
+  <br />
+  <br />
+
+
+  <!--Left Table Buttons-->
+  <div class="resource-table">
+    <div class="container">
+      <div
+        style="border-color: rgb(82, 86, 89);background-color: rgb(82, 86, 89);"
+        class="row"
+        id="leftTableBtns"
+      >
+        <div class="col-lg-4"></div>
+        <div class="col-lg-4">
+          <p style="position:relative;top:7px;"><b>Resource Catalog</b></p>
+        </div>
+        <div class="dropdown leftTable col-lg-2">
+          <button
+            style="border-color: rgb(82, 86, 89);background-color:rgb(225, 110, 55); margin-left: 57px;border-radius:0px;"
+            class="btn btn-info dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            <i class="fa fa-bars"></i>
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" (click)="masterToggle('clear')"
+            >Clear Selection</a
+            >
+            <a class="dropdown-item" (click)="masterToggle('all')"
+            >Select All</a
+            >
+          </div>
+        </div>
+        <div class="col-lg-2">
+          <button
+            style="border-color: rgb(82, 86, 89);background-color:rgb(225, 110, 55);margin-left:21px;border-radius:0px;"
+            type="button"
+            class="btn btn-info"
+            (click)="moveDataToOtherTable()"
+          >
+            <i class="fas fa-share"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <mat-table #table [dataSource]="dataSource">
+      <!-- Checkbox Column -->
+      <ng-container matColumnDef="select">
+        <mat-header-cell *matHeaderCellDef>
+          <mat-checkbox
+            (change)="$event ? masterToggle() : null"
+            [checked]="selection.hasValue() && isAllSelected()"
+            [indeterminate]="selection.hasValue() && !isAllSelected()">
+          </mat-checkbox>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <mat-checkbox
+            (click)="$event.stopPropagation()"
+            (change)="$event ? selection.toggle(row) : null"
+            [checked]="selection.isSelected(row)">
+          </mat-checkbox>
+        </mat-cell>
+      </ng-container>
+
+      <!--Project name column-->
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef style="text-align: center">
+          Project Name
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{ element.resource_name }}</mat-cell>
+      </ng-container>
+
+      <!--Project code column -->
+      <ng-container matColumnDef="code">
+        <mat-header-cell *matHeaderCellDef> Project Code </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{ element.resource_code }}</mat-cell>
+      </ng-container>
+
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row
+        *matRowDef="let row; columns: displayedColumns"
+        (click)="selection.toggle(row)"
+      >
+      </mat-row>
+    </mat-table>
+    <!-- <div>
+      <mat-paginator #paginator [pageSize]="15" [pageSizeOptions]="[5, 10, 15,25, 100]">
+      </mat-paginator>
+    </div> -->
+  </div>
+
+  <!-- </td>
+      <td> style="margin-top:30px;margin-left:8px;" "example-container2 mat-elevation-z8" -->
+  <div class="project-table">
+    <div class="container">
+      <div style="background-color: rgb(82, 86, 89);" class="row">
+        <div class="col-lg-4"></div>
+        <div class="col-lg-4">
+          <p style="position:relative;top:7px;"><b>Project</b></p>
+        </div>
+        <div class="col-lg-4">
+          <button
+            style="border-color: rgb(82, 86, 89);background-color: rgb(225, 110, 55);float:right;border-radius:0px;"
+            class="btn btn-info"
+            (click)="trashRightList()"
+          >
+            <i class="fa fa-trash"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <mat-table #table [dataSource]="checkedDataSource">
+      <!-- Checkbox Column -->
+      <ng-container matColumnDef="select">
+        <mat-header-cell *matHeaderCellDef>
+          <mat-checkbox
+            (change)="$event ? masterCheckedToggle() : null"
+            [checked]="checkedSelection.hasValue() && isAllCheckedSelected()"
+            [indeterminate]="
+              checkedSelection.hasValue() && !isAllCheckedSelected()
+            ">
+          </mat-checkbox>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <mat-checkbox
+            (click)="$event.stopPropagation()"
+            (change)="$event ? checkedSelection.toggle(row) : null"
+            [checked]="checkedSelection.isSelected(row)"
+          >
+          </mat-checkbox>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef> Project Name </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{ element.resource_name }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="code">
+        <mat-header-cell *matHeaderCellDef> Project Code </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{ element.resource_code }}</mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row
+        *matRowDef="let row; columns: displayedColumns"
+        (click)="checkedSelection.toggle(row)"
+      >
+      </mat-row>
+    </mat-table>
+    <!-- <div>
+      <mat-paginator #checkedpaginator [pageSize]="15" [pageSizeOptions]="[5, 10, 15,25, 100]">
+      </mat-paginator>
+    </div> -->
+  </div>
+
+  <div><br /><br /></div>
+
+  <div class="footer">
+    <a
+      [routerLink]="['/resource']"
+      routerLinkActive="router-link-active"
+      style="padding-left: 50px"
+    >Edit Resource</a
+    >
+    <button class="submit" type="submit" (click)="submitHandler()" routerLink="/formula">
+      <i class="fas fa-check"></i>Submit
+    </button>
+  </div>
+
+</div>
+<!-- </mat-card> -->
+

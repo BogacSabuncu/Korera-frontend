@@ -12,6 +12,15 @@ export class AuthGuard implements CanActivate {
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         const currentUser = this.authenticationService.currentUserValue;
+        let today : number = Date.now();
+        //console.log(today);
+
+        if(currentUser['expire-time']<today){
+            this.authenticationService.logout();
+            this.router.navigate(['/login'], { queryParams: { returnUrl: state.url }});
+            return false;
+        }
+
         if (currentUser) {
             // authorised so return true
             return true;

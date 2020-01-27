@@ -1,0 +1,158 @@
+<div style="width: 80vw;">
+  <mat-toolbar style="background-color: #808080">
+    <div class="row w-100">
+      <div class="col">
+        <div class="row no-gutters">
+
+<!--  filter-->
+          <div class="col">
+            <span>
+              <input
+                (keyup)="applyFilter($event)"
+                id="search-input"
+                type="text"
+                placeholder="Keyword"
+              />
+            </span>
+          </div>
+          <div class="col">
+            <span>
+              <button class="add-btn search-btn">
+                <span style="color: white">
+                  <i class="fas fa-search"></i>
+                </span>
+              </button>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="col text-center">
+        <p class="pt-3 font-weight-normal">Resource Catalog</p>
+      </div>
+
+<!--      dropdown-->
+      <div class="col text-right px-0">
+        <button
+          class="add-btn dropdown-toggle"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          <span style="color: white">
+            <i class="fas fa-plus"></i>
+          </span>
+        </button>
+        <div
+          id="dropdown-menu-size"
+          class="dropdown-menu dropdown-menu-right shadow text-secondary mr-0 mt-auto"
+        >
+          <a
+            class="dropdown-item btn"
+            id="dropdown-item-padding"
+            (click)="addNewRow()"
+          >
+            <div class="row w-100">
+              <div class="col-5 text-center">
+                <i class="fas fa-align-left"></i>
+              </div>
+              <div class="col-7 text-left px-0">Add Row</div>
+            </div>
+          </a>
+          <a
+            class="dropdown-item"
+            id="dropdown-item-padding"
+            (click)="addNewFeature()"
+          >
+            <div class="row w-100">
+              <div class="col-5 text-center">
+                <i class="fas fa-columns"></i>
+              </div>
+              <div class="col-7 text-left px-0">Add Column</div>
+            </div>
+          </a>
+          <a
+            class="dropdown-item btn"
+            id="dropdown-item-padding"
+            (click)="importCSV()"
+          >
+            <div class="row w-100">
+              <div class="col-5 text-center">
+                <i class="far fa-file-excel"></i>
+              </div>
+              <div class="col-7 text-left px-0">Import CSV</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </mat-toolbar>
+</div>
+
+<div class="table-container">
+  <mat-table [dataSource]="dataSource" matSort class="table-border" >
+
+    <!-- Resource Code Column -->
+    <ng-container matColumnDef="resourceCode">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> RESOURCE CODE </mat-header-cell>
+      <mat-cell *matCellDef="let element; let i = index">
+        <ng-container *ngIf="element.editable">
+          <div class="flex-container">
+            <button (click)="saveResource(element,i)">
+              <i class="fas fa-check fa-xs tick-icon"></i>
+            </button>
+            <button (click)="discardResource(element, i)">
+              <i class="fas fa-times fa-xs times-icon"></i>
+            </button>
+          </div>
+          <input
+            type="text"
+            id="new-resource-input"
+            [placeholder]="element.resource_code?element.resource_code:''"
+            [(ngModel)]="newResource.resource_code"
+          />
+        </ng-container>
+        <ng-container *ngIf="!element.editable">
+          <div (click)="updateResource(element)">{{ element.resource_code}}</div>
+        </ng-container>
+      </mat-cell>
+    </ng-container>
+
+    <!-- Resource Name Column -->
+    <ng-container matColumnDef="resourceName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> RESOURCE NAME </mat-header-cell>
+      <mat-cell *matCellDef="let element; let i = index">
+        <ng-container *ngIf="element.editable">
+          <input
+            type="text"
+            id="new-resource-input"
+            [placeholder]="element.resource_name?element.resource_name:''"
+            [(ngModel)]="newResource.resource_name"
+            autofocus
+          />
+        </ng-container>
+        <ng-container *ngIf="!element.editable">
+          <div (click)="updateResource(element)">
+          {{ element.resource_name }}</div>
+        </ng-container>
+      </mat-cell>
+    </ng-container>
+
+
+
+    <ng-container *ngFor="let feature of displayedColumns | slice: 2; let i = index">
+
+      <ng-container matColumnDef="{{ feature }}">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> {{ feature }} </mat-header-cell>
+        <mat-cell *matCellDef="let element"> </mat-cell>
+      </ng-container>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  </mat-table>
+  <mat-paginator [length]="100"
+                 [pageSize]="10"
+                 [pageSizeOptions]="[5, 10, 25, 100]">
+  </mat-paginator>
+</div>
+
